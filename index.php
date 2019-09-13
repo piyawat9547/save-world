@@ -1,6 +1,7 @@
 <?php
 $access_token = '9G7umqWJQG5iSqeGem3E4iYGap1DcuIpV2O6UldOppui5boyKfuoBifVC8lOmcq7w5Ua+oVVloOTlztg9TvZA5wkP2UBe+RmEVK38bdEuzlOjzwbADdMtnkHXQcUzz8N3/WYxwic+ouuIXn4y51SzAdB04t89/1O/w1cDnyilFU=';
 // Get POST body content
+http_response_code(200);
 $content = file_get_contents('php://input');
 // Parse JSON
 $Light = file_get_contents('https://api.thingspeak.com/channels/509782/fields/3/last.txt');
