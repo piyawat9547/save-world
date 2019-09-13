@@ -4,6 +4,41 @@ $user = "mmdkvvqziulstc";
 $pass = "e10240d71df70c411f5201bc37491e9091491ff276b8d8b66f8e507ea5b7dc22";
 $db = "dcv361109jo6fh";
 http_response_code(200);
+date_default_timezone_set("Asia/Bangkok");
+$date = date("Y-m-d");
+function showtime($time)
+{
+	$date = date("Y-m-d");
+	$h = split(":", $time);
+	if ($h[1] < 15)
+	{
+		$h[1] = "00";
+		$selectbydate = "select * from weatherstation where \"DATETIME\" BETWEEN '$date $h[0]:0:00' and '$date $h[0]:15:00' order by \"DATETIME\" desc limit 1";
+	}
+	else
+	if ($h[1] >= 15 && $h[1] < 30)
+	{
+		$h[1] = "15";
+		$selectbydate = "select * from weatherstation where \"DATETIME\" BETWEEN '$date $h[0]:15:01' and '$date $h[0]:30:00' order by \"DATETIME\" desc limit 1";
+	}
+	else
+	if ($h[1] >= 30 && $h[1] < 45)
+	{
+		$h[1] = "30";
+		$selectbydate = "select * from weatherstation where \"DATETIME\" BETWEEN '$date $h[0]:30:01' and '$date $h[0]:45:00' order by \"DATETIME\" desc limit 1";
+	}
+	else
+	if ($h[1] >= 45)
+	{
+		$h[1] = "45";
+		$selectbydate = "select * from weatherstation where \"DATETIME\" BETWEEN '$date $h[0]:45:01' and '$date $h[0]:59:59' order by \"DATETIME\" desc limit 1";
+	}
+	
+	return array(
+		$h[0] . ":" . $h[1],
+		$selectbydate
+	);
+}
 // database
 $dbconn = pg_connect("host=" . $GLOBALS['host'] . " port=5432 dbname=" . $GLOBALS['db'] . " user=" . $GLOBALS['user'] . " password=" . $GLOBALS['pass']) or die('Could not connect: ' . pg_last_error());
 // Get POST body content
@@ -44,6 +79,70 @@ if (!is_null($events['events']))
 				$messages = ['type' => 'text', 'text' => "สถานที่ : " . "มหาวิทยาลัยวลัยลักษณ์" .  "\n" . "อุณหภูมิ C :" . $TEM . "\n" . "ความชื้น :" . $HUM . " %" . "\n" . "[help] เพื่อดูเมนู"];
 			}
 			
+			
+			
+			
+			
+			
+			
+			
+			
+			//EndCase
+			if (trim(strtoupper($text)) == "HI")
+			{
+				$messages = ['type' => 'text', 'text' => "hello"];
+			}
+			if (trim(strtoupper($text)) == "1")
+			{
+				$messages = ['type' => 'text', 'text' => "30 บาท"];
+			}
+			if ($text == "รูป")
+			{
+				$messages = ['type' => 'image', 'originalContentUrl' => "https://sv6.postjung.com/picpost/data/184/184340-1-2995.jpg", 'previewImageUrl' => "https://sv6.postjung.com/picpost/data/184/184340-1-2995.jpg"];
+			}
+			if (ereg_replace('[[:space:]]+', '', strtoupper($text)) == "INFO")
+			{
+				$messages = ['type' => 'text', 'text' => "มหาวิทยาลัยวลัยลักษณ์เป็นมหาวิทยาลัยของรัฐ และอยู่ในกำกับของรัฐบาลที่ได้รับพระมหากรุณาธิคุณจากพระบาทสมเด็จพระเจ้าอยู่หัว พระราชทานชื่ออันเป็นสร้อยพระนามในสมเด็จพระเจ้าลูกเธอ เจ้าฟ้าจุฬาภรณวลัยลักษณ์อัครราชกุมารี" ."\n"."อ่านเพิ่มเติม: https://www.wu.ac.th"];
+			}
+				
+			if ( ereg_replace('[[:space:]]+', '', trim($text)) == "ภาพ")
+			{
+				$rs = pg_query($dbconn, $sqlgetlastrecord) or die("Cannot execute query: $query\n");
+				$templink = "";
+				while ($row = pg_fetch_row($rs))
+				{
+					$templink = $row[1];
+				}
+				$messages = ['type' => 'image', 'originalContentUrl' => $templink, 'previewImageUrl' => $templink];
+			}
+			$textSplited = split(" ", $text);
+			if ( ereg_replace('[[:space:]]+', '', trim($textSplited[0])) == "ภาพ")
+			{
+				$dataFromshowtime = showtime($textSplited[1]);
+				$rs = pg_query($dbconn, $dataFromshowtime[1]) or die("Cannot execute query: $query\n");
+				$templink = ""; 
+				$qcount=0;
+				while ($row = pg_fetch_row($rs))
+				{
+					$templink = $row[1];
+					$qcount++;
+				}
+				//$messages = ['type' => 'text', 'text' => "HI $dataFromshowtime[0] \n$dataFromshowtime[1] \n$templink"
+				if ($qcount > 0){
+				$messages = [
+				'type' => 'image',
+				'originalContentUrl' => $templink,
+					'previewImageUrl' => $templink
+				];}
+				else {
+					$messages = [
+						'type' => 'image',
+						'originalContentUrl' => "https://imgur.com/aOWIijh.jpg",
+							'previewImageUrl' => "https://imgur.com/aOWIijh.jpg" 
+		
+						];
+				}
+			}
 			if ($text == "ภาพ")
 			{
 				$rs = pg_query($dbconn, $sqlgetlastrecord) or die("Cannot execute query: $query\n");
@@ -87,5 +186,4 @@ if (!is_null($events['events']))
 	}
 }
 echo "OK";
-echo $date;
 ?>
