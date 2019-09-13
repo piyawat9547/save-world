@@ -1,5 +1,5 @@
 <?php
-http_response_code(200);
+
 $access_token = 'gdfWCjyBwS+xb/EusK4cvcTATrcIgs1bK6kkU1cx/Bhi3Tta9n08ZPt/tFPS7iWFLIWMxLYckZaGVeXnrpOCxnK/5FkG+Vp6tadAk2DBLE29Ej0VrSgDFuHiOM16Qf2N2TPGvEu3iXHdOt62LUqLAAdB04t89/1O/w1cDnyilFU=';
 $host = "ec2-107-22-211-182.compute-1.amazonaws.com";
 $user = "mmdkvvqziulstc";
@@ -40,6 +40,7 @@ function showtime($time)
 		$selectbydate
 	);
 }
+http_response_code(200);
 // database
 $dbconn = pg_connect("host=" . $GLOBALS['host'] . " port=5432 dbname=" . $GLOBALS['db'] . " user=" . $GLOBALS['user'] . " password=" . $GLOBALS['pass']) or die('Could not connect: ' . pg_last_error());
 // Get POST body content
