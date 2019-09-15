@@ -10,7 +10,7 @@
 	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้");
 	$encodeJson = json_encode($messages);
 	$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
-  	$LINEDatas['token'] = "<YOUR-CHANNEL-ACCESS-TOKEN>";
+  	$LINEDatas['token'] = "5gZQWeN7r4W76y0rDoTq1kmZKNe0AHqZCoN0qKKUpVRyTg1qYcDk+9uvFzT0wOC1T6YhxwQ6qdRd7ld6Nnf/VT6rhFuPKAXakQ2gQazw/rDdeEmMASmG0i0wxPq5J9mT0CB1EQy2A2p+Bra2ayaa/AdB04t89/1O/w1cDnyilFU=";
   	$results = sentMessage($encodeJson,$LINEDatas);
 	/*Return HTTP Request 200*/
 	http_response_code(200);
