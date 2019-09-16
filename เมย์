@@ -1,1 +1,30 @@
-
+else if($message == "1"){
+        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+        $arrayPostData['messages'][0]['type'] = "text";
+        $arrayPostData['messages'][0]['text'] = "............."; //เว็บไซต์ OTOP ที่น้องจะใส่นะ
+        replyMsg($arrayHeader,$arrayPostData);
+    }
+    else if($message == "2"){
+        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+        $arrayPostData['messages'][0]['type'] = "text";
+        $arrayPostData['messages'][0]['text'] = "............."; //ข้อมูลเกี่ยวกับบบรจุภัณฑ์ที่น้องจะใส่
+        replyMsg($arrayHeader,$arrayPostData);
+    }
+     else if($message == "3"){
+        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+        $arrayPostData['messages'][0]['type'] = "text";
+        $arrayPostData['messages'][0]['text'] = "............."; //ข้อมูลเกี่ยวกับราคาบบรจุภัณฑ์ ถ้าเป็นตารางน้องเอาลง google drive นะเซฟเป็น exel ละวางลิ้งตรงนี้
+        replyMsg($arrayHeader,$arrayPostData);
+    }
+     else if($message == "4"){
+        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+        $arrayPostData['messages'][0]['type'] = "text";
+        $arrayPostData['messages'][0]['text'] = "............."; //ข้อมูลเกี่ยวกับราคาบบรจุภัณฑ์ ถ้าเป็นตารางน้องเอาลง google drive นะเซฟเป็น exel ละวางลิ้งตรงนี้
+        replyMsg($arrayHeader,$arrayPostData);
+    }
+    else if($message == "5"){
+        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+        $arrayPostData['messages'][0]['type'] = "text";
+        $arrayPostData['messages'][0]['text'] = "............."; //ข้อมูลเกี่ยวกับราคาบบรจุภัณฑ์ที่ถูกสุด ถ้าเป็นตารางน้องเอาลง google drive นะเซฟเป็น exel ละวางลิ้งตรงนี้
+        replyMsg($arrayHeader,$arrayPostData);
+    }
